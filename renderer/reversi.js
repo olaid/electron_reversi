@@ -13,7 +13,7 @@ function ev_mouseClick(e) {
   game.put(x,y)
   draw.draw_board()
   draw.draw_discs(game.board)
-  let sum=0
-  game.canPutChecker().forEach(x=>x.forEach(y=>sum+=y))
-  if( sum = 0 ) alert(game.player==1?"黒の勝利です":"白の勝利です")
+  //let sum=0
+  //game.canPutChecker().forEach(x=>x.forEach(y=>sum+=y))
+  //if( sum = 0 ) alert(game.player==1?"黒の勝利です":"白の勝利です")
 }
