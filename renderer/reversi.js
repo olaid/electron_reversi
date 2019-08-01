@@ -7,24 +7,18 @@ var game = new Game()
 var draw = new Draw(context)
 draw.draw_discs(game.board)
 
-async function turnEach(x,y){
-  return new Promise(resolve =>{
-    game.put(x,y)
-    draw.draw_board()
-    draw.draw_discs(game.board)
-    resolve()
-  })
-}
-async function ev_mouseClick(e) {
+function ev_mouseClick(e) {
   let x = Math.floor((e.clientX-e.target.getBoundingClientRect().top)/60)
   let y = Math.floor((e.clientY-e.target.getBoundingClientRect().left)/60)
-  await turnEach(x,y)
+  game.put(x,y)
+  draw.draw_board()
+  draw.draw_discs(game.board)
   if(game.turnEnd()){
-    alert(
+    setTimeout(()=>{alert(
       game.disc_count(1)>game.disc_count(-1)?"黒の勝利です":
       game.disc_count(1)<game.disc_count(-1)?"白の勝利です":
       "ドローです"
-    )
+    )},0)
     game = new Game()
     draw.draw_board()
     draw.draw_discs(game.board)
