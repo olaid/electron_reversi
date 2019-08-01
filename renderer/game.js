@@ -22,6 +22,28 @@ export default class Game {
       this.player = -this.player
     }
   }
+  disc_count(player){
+    let count=0
+    //配列全てをサマリして置ける箇所数を出す
+    this.board.forEach(x=>x.forEach(y=>y==player?count++:null))
+    return count
+  }
+  turnEnd(){
+    let sum=0
+    //配列全てをサマリして置ける箇所数を出す
+    this.canPutChecker().forEach(x=>x.forEach(y=>sum+=y))
+    if( sum == 0 ){
+      //プレイヤーをPASS
+      this.player = -this.player
+      //配列全てをサマリして置ける箇所数を出す
+      sum = 0
+      this.canPutChecker().forEach(x=>x.forEach(y=>sum+=y))
+      if( sum == 0){
+        return true
+      }
+    }
+    return false
+  }
   canPutChecker(){
     let canPutBoard = [
       [0,0,0,0,0,0,0,0],

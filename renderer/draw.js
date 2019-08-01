@@ -25,33 +25,33 @@ export default class Drawing {
   draw_discs(board){
     this.board = board
     for (var x = 0; x < 8; x++) {
-        for (var y = 0; y < 8; y++) {
-          this.canvas.beginPath()
-          if (this.board[x][y] == 1 ) {
-            this.canvas.fillStyle = COLOR_BLACK;
-            this.canvas.arc(
-              x * CELL_SIZE + CELL_SIZE/2,
-              y * CELL_SIZE + CELL_SIZE/2,
-              DISC_SIZE,
-              0, 
-              Math.PI*2, 
-              false
-            );
-            this.canvas.fill();
-          }
-          else if (this.board[x][y] == -1 ) {
-            this.canvas.fillStyle = COLOR_WHITE;
-            this.canvas.arc(
-              x * CELL_SIZE + CELL_SIZE/2,
-              y * CELL_SIZE + CELL_SIZE/2,
-              DISC_SIZE ,
-              0, 
-              Math.PI*2, 
-              false
-            );
-            this.canvas.fill();
-          }
+      for (var y = 0; y < 8; y++) {
+        this.canvas.beginPath()
+        if (this.board[x][y] == 1 ) {
+          this.canvas.fillStyle = COLOR_BLACK;
+          this.canvas.arc(
+            x * CELL_SIZE + CELL_SIZE/2,
+            y * CELL_SIZE + CELL_SIZE/2,
+            DISC_SIZE,
+            0, 
+            Math.PI*2, 
+            false
+          );
+          this.canvas.fill();
         }
+        else if (this.board[x][y] == -1 ) {
+          this.canvas.fillStyle = COLOR_WHITE;
+          this.canvas.arc(
+            x * CELL_SIZE + CELL_SIZE/2,
+            y * CELL_SIZE + CELL_SIZE/2,
+            DISC_SIZE ,
+            0, 
+            Math.PI*2, 
+            false
+          );
+          this.canvas.fill();
+        }
+      }
     }
   }
 }

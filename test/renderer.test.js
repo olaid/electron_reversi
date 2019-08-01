@@ -70,17 +70,65 @@ describe('Game', function () {
     it('最速PASS手順', () => {
       const game = new Game()
       game.put(4,5)
+      game.turnEnd()
       game.put(5,5)
+      game.turnEnd()
       game.put(2,3)
+      game.turnEnd()
       game.put(4,6)
+      game.turnEnd()
       game.put(4,7)
+      game.turnEnd()
       game.put(3,7)
+      game.turnEnd()
       game.put(6,5)
       const def_player = game.player
       game.put(5,7)
+      game.turnEnd()
+      console.log(game.board.map(x=>x.map(y=>y==-1?2:y).join('') ) )
       //PASSされて同じプレイヤーに戻ること
       expect(def_player).toBe(game.player)
-      console.log(game.board.map(x=>x.map(y=>y==-1?2:y).join('') ) )
+    })
+    it('チェックXチェック' ,() => {
+      const game = new Game()
+      expect(game.canPutChecker().map(x=>x.map(y=>y==true?1:0) ) ).toStrictEqual(
+        [
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,1,0,0,0,0],
+          [0,0,1,0,0,0,0,0],
+          [0,0,0,0,0,1,0,0],
+          [0,0,0,0,1,0,0,0],
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0]
+        ]
+      )
+      game.put(4,5)
+      expect(game.canPutChecker().map(x=>x.map(y=>y==true?1:0) ) ).toStrictEqual(
+        [
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,1,0,0],
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,1,0,1,0,0],
+          [0,0,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0]
+        ]
+      )
+      //console.log(game.canPutChecker().map(x=>x.map(y=>y==true?1:0).join(',') ) )
+    })
+    it('白全滅' ,() => {
+      const game = new Game()
+      game.put(4,5)
+      game.put(5,3)
+      game.put(4,2)
+      game.put(3,5)
+      game.put(2,4)
+      game.put(5,5)
+      game.put(4,6)
+      game.put(5,4)
+      game.put(6,4)
     })
   })
 
