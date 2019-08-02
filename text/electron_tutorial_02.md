@@ -387,7 +387,41 @@ function ev_mouseClick(e) {
       expect(def_player).toBe(game.player)
       console.log(game.board.map(x=>x.map(y=>y==-1?2:y).join('') ) )
     })
+    it('白全滅' ,() => {
+      const game = new Game()
+      game.put(4,5)
+      game.put(5,3)
+      game.put(4,2)
+      game.put(3,5)
+      game.put(2,4)
+      game.put(5,5)
+      game.put(4,6)
+      game.put(5,4)
+      game.put(6,4)
+      //白が全滅していることを確認
+      expect(game.disc_count(-1)).toBe(0)
+      //試合が終了するとturnEndがTrueを返す
+      expect(game.turnEnd()).toBeTruthy()
+    })
+    it('黒全滅' ,() => {
+      const game = new Game()
+      game.put(4,5)
+      game.put(5,5)
+      game.put(5,4)
+      game.put(3,5)
+      game.put(2,4)
+      game.put(1,3)
+      game.put(2,3)
+      game.put(5,3)
+      game.put(3,2)
+      game.put(3,1)
+      //黒が全滅していることを確認
+      expect(game.disc_count(1)).toBe(0)
+      //試合が終了するとturnEndがTrueを返す
+      expect(game.turnEnd()).toBeTruthy()
+    })
   })
+
 ```
 PASSを実装するにはプレイヤーが置けるかどうか判断する必要があります。
 まずは盤面における場所があるか確認する処理を追加しましょう。
@@ -413,7 +447,7 @@ PASSを実装するにはプレイヤーが置けるかどうか判断する必�
   }
 ```
 関数の確認のためにテストを書きます。
-この辺りはテストがしづらくなるため一度consoleログで確認し問題がなければ比較式で書き直すという方法で作成しています。console.log(game.canPutChecker().map(x=>x.map(y=>y==true?1:0).join(',') ) )のチェックを比較式に直してみてください。
+この辺りはテストがしづらくなるため一度consoleログで確認し問題がなければ比較式で書き直すという方法で作成しています。二つ目のチェックを比較式に直してみてください。
 ### renderer.test.js
 ```
     it('チェックXチェック' ,() => {
@@ -493,7 +527,8 @@ function ev_mouseClick(e) {
 }
 ```
 これで実装が終わりと行きたいところですが、実際に起動してみると最後の石を置いた時点でアラートが出てしまい石が置かれず勝敗が出てしまいます。
-draw系の処理が非同期処理で行われておりalertは同期処理のため先に処理されてしまうためです。これを解消しましょう。
+alert処理はキャンバスのリフレッシュをブロックしてしまうためでこれを防ぐためにalert処理を非同期処理にします。
+[canvas要素の基本的な使い方まとめ](http://defghi1977.html.xdomain.jp/tech/canvasMemo/canvasMemo.htm#h28)
 ### reversi.js
 ```
     setTimeout(()=>{
@@ -509,18 +544,32 @@ draw系の処理が非同期処理で行われておりalertは同期処理の�
 ```
 setTimeoutを使ってアラートも非同期処理としてみました。
 こちらの方法でも問題なく動作するかと思います。
-しかし、こちらの方法は動作順序が保証されているものではないためdraw系の処理を同期処理に変えることが望ましいです。
-async/awaitを使ってみましょう。
-### コマンド
-```
-npm install @babel/polyfill --save-dev
-```
-
-### web pack.config.js
+しかし、こちらの書き方ではalert処理の再利用が考えられておらず後続処理の実行タイミングも明示的ではありません。
+遅延実行する形に変更します。
+### reversi.js
 ``` 
-entry: {
-    "reversi": ['@babel/polyfill',"./renderer/reversi.js"]
+function ev_mouseClick(e) {
+  let x = Math.floor((e.clientX-e.target.getBoundingClientRect().top)/60)
+  let y = Math.floor((e.clientY-e.target.getBoundingClientRect().left)/60)
+  //alertを非同期としてPromiseでラップする
+  //resolveはthenメソッドに渡された処理を実行する
+  let alertWithNoBlock = msg => new Promise(
+    (resolve, reject) => setTimeout(() => resolve(alert(msg)), 0));
+  game.put(x,y)
+  draw.draw_board()
+  draw.draw_discs(game.board)
+  if(game.turnEnd()){
+    alertWithNoBlock(
+      game.disc_count(1)>game.disc_count(-1)?"黒の勝利です":
+      game.disc_count(1)<game.disc_count(-1)?"白の勝利です":
+      "ドローです"
+    ).then(result => {
+      game = new Game()
+      draw.draw_board()
+      draw.draw_discs(game.board)
+    });
   }
+}
 ```
 
 これで基本的な実装に関しては終了です！

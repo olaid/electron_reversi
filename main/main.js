@@ -1,5 +1,5 @@
 // Electronのモジュール
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, Menu, BrowserWindow, ipcMain} = require('electron');
 
 // Electronの初期化完了後に実行
 app.on("ready", () => {
@@ -9,6 +9,7 @@ app.on("ready", () => {
   mainWindow.setTitle("reversi");
   //使用するhtmlファイルを指定する
   mainWindow.loadURL(`file://${__dirname}/../dist/reversi.html`);
+
   // ウィンドウが閉じられたらアプリも終了
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -19,3 +20,22 @@ app.on("ready", () => {
 app.on("window-all-closed", () => {
   app.quit();
 });
+
+// メニューはリスタートのみ
+const templateMenu = [
+    {
+        label: 'Game',
+        submenu: [
+            {
+                label: 'Restart',
+                accelerator: 'CmdOrCtrl+R',
+                click(item, focusedWindow){
+                    if(focusedWindow) focusedWindow.reload()
+                },
+            }
+        ]
+    }
+];
+
+const menu = Menu.buildFromTemplate(templateMenu);
+Menu.setApplicationMenu(menu);

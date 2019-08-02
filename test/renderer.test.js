@@ -129,6 +129,27 @@ describe('Game', function () {
       game.put(4,6)
       game.put(5,4)
       game.put(6,4)
+      //白が全滅していることを確認
+      expect(game.disc_count(-1)).toBe(0)
+      //試合が終了するとturnEndがTrueを返す予定
+      expect(game.turnEnd()).toBeTruthy()
+    })
+    it('黒全滅' ,() => {
+      const game = new Game()
+      game.put(4,5)
+      game.put(5,5)
+      game.put(5,4)
+      game.put(3,5)
+      game.put(2,4)
+      game.put(1,3)
+      game.put(2,3)
+      game.put(5,3)
+      game.put(3,2)
+      game.put(3,1)
+      //黒が全滅していることを確認
+      expect(game.disc_count(1)).toBe(0)
+      //試合が終了するとturnEndがTrueを返す予定
+      expect(game.turnEnd()).toBeTruthy()
     })
   })
 

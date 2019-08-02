@@ -47,7 +47,7 @@ var rendererConfig = {
   },
   target: 'electron-renderer',
   entry: {
-    "reversi": ['@babel/polyfill',"./renderer/reversi.js"]
+    "reversi": "./renderer/reversi.js"
   }
 };
 module.exports = [mainConfig, rendererConfig];

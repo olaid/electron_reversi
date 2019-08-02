@@ -67,11 +67,35 @@ app.on("ready", () => {
 app.on("window-all-closed", () => {
  app.quit();
 });
-./dist/reversi.html 
+
+// メニューはリスタートのみ
+const templateMenu = [
+    {
+        label: 'Game',
+        submenu: [
+            {
+                label: 'Restart',
+                accelerator: 'CmdOrCtrl+R',
+                click(item, focusedWindow){
+                    if(focusedWindow) focusedWindow.reload()
+                },
+            }
+        ]
+    }
+];
+```
+
+### ./dist/reversi.html 
+```
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <style>
+    html{
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
  <p>Hello World</p>
