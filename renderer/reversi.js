@@ -5,6 +5,7 @@ var context = document.getElementById("canv").getContext('2d');
 context.canvas.addEventListener('mouseup', ev_mouseClick)
 var game = new Game()
 var draw = new Draw(context)
+draw.put_point_highlight(game.player,game.canPutChecker())
 draw.draw_discs(game.board)
 
 function ev_mouseClick(e) {
@@ -16,6 +17,7 @@ function ev_mouseClick(e) {
     (resolve, reject) => setTimeout(() => resolve(alert(msg)), 0));
   game.put(x,y)
   draw.draw_board()
+  draw.put_point_highlight(game.player,game.canPutChecker())
   draw.draw_discs(game.board)
   if(game.turnEnd()){
     alertWithNoBlock(
@@ -25,6 +27,7 @@ function ev_mouseClick(e) {
     ).then(result => {
       game = new Game()
       draw.draw_board()
+      draw.put_point_highlight(game.player,game.canPutChecker())
       draw.draw_discs(game.board)
     });
   }
