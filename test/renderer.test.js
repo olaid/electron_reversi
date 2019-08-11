@@ -91,29 +91,21 @@ describe('Game', function () {
     })
     it('チェックXチェック' ,() => {
       const game = new Game()
-      expect(game.canPutChecker().map(x=>x.map(y=>y==true?1:0) ) ).toStrictEqual(
+      console.log(game.canPutChecker())
+      expect(game.canPutChecker()).toStrictEqual(
         [
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,1,0,0,0,0],
-          [0,0,1,0,0,0,0,0],
-          [0,0,0,0,0,1,0,0],
-          [0,0,0,0,1,0,0,0],
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0]
+          [2,3],
+          [3,2],
+          [4,5],
+          [5,4]
         ]
       )
       game.put(4,5)
-      expect(game.canPutChecker().map(x=>x.map(y=>y==true?1:0) ) ).toStrictEqual(
+      expect(game.canPutChecker()).toStrictEqual(
         [
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,1,0,0],
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,1,0,1,0,0],
-          [0,0,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0]
+          [3,5],
+          [5,3],
+          [5,5]
         ]
       )
       //console.log(game.canPutChecker().map(x=>x.map(y=>y==true?1:0).join(',') ) )

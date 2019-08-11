@@ -22,20 +22,20 @@ app.on("window-all-closed", () => {
 });
 
 // メニューはリスタートのみ
-const templateMenu = [
-    {
-        label: 'Game',
-        submenu: [
-            {
-                label: 'Restart',
-                accelerator: 'CmdOrCtrl+R',
-                click(item, focusedWindow){
-                    if(focusedWindow) focusedWindow.reload()
-                },
-            }
-        ]
-    }
-];
-
-const menu = Menu.buildFromTemplate(templateMenu);
-Menu.setApplicationMenu(menu);
+//const templateMenu = [
+//    {
+//        label: 'Game',
+//        submenu: [
+//            {
+//                label: 'Restart',
+//                accelerator: 'CmdOrCtrl+R',
+//                click(item, focusedWindow){
+//                    if(focusedWindow) focusedWindow.reload()
+//                },
+//            }
+//        ]
+//    }
+//];
+//
+//const menu = Menu.buildFromTemplate(templateMenu);
+//Menu.setApplicationMenu(menu);

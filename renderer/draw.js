@@ -82,22 +82,20 @@ export default class Draw {
   put_point_highlight(pleyer,board){
     this.canvas.fillStyle = pleyer==1?COLOR_BLACK:COLOR_WHITE
     this.canvas.globalAlpha = pleyer==1?0.2:0.4
-    for (var x = 0; x < 8; x++) {
-      for (var y = 0; y < 8; y++) {
+    board.forEach(
+      ( postion ) => {
         this.canvas.beginPath()
-        if (board[x][y] == 1 ) {
-          this.canvas.arc(
-            x * CELL_SIZE + CELL_SIZE/2,
-            y * CELL_SIZE + CELL_SIZE/2,
-            DISC_SIZE ,
-            0, 
-            Math.PI*2, 
-            false
-          )
-          this.canvas.fill();
-        }
+        this.canvas.arc(
+          postion[0] * CELL_SIZE + CELL_SIZE/2,
+          postion[1] * CELL_SIZE + CELL_SIZE/2,
+          DISC_SIZE ,
+          0, 
+          Math.PI*2, 
+          false
+        )
+        this.canvas.fill()
       }
-    }
+    )
     this.canvas.globalAlpha = 1
   }
 }

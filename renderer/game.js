@@ -29,35 +29,23 @@ export default class Game {
     return count
   }
   turnEnd(){
-    let sum=0
-    //配列全てをサマリして置ける箇所数を出す
-    this.canPutChecker().forEach(x=>x.forEach(y=>sum+=y))
-    if( sum == 0 ){
+    //置ける箇所数が0なら
+    if( this.canPutChecker().length == 0 ){
       //プレイヤーをPASS
       this.player = -this.player
-      //配列全てをサマリして置ける箇所数を出す
-      sum = 0
-      this.canPutChecker().forEach(x=>x.forEach(y=>sum+=y))
-      if( sum == 0){
+      //置ける箇所数が0なら
+      if( this.canPutChecker().length == 0 ){
+        //Geme Over
         return true
       }
     }
     return false
   }
   canPutChecker(){
-    let canPutBoard = [
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0]
-    ]
+    let canPutBoard=[]
     for( let x = 0; x <= 7; x++ ){
       for( let y = 0; y <= 7; y++ ){
-        canPutBoard[x][y] = this.canPut(x,y)
+        if(this.canPut(x,y)==1)canPutBoard.push([x,y])
       }
     }
     return canPutBoard
