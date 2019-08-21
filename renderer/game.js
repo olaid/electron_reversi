@@ -45,7 +45,7 @@ export default class Game {
     let canPutBoard=[]
     for( let x = 0; x <= 7; x++ ){
       for( let y = 0; y <= 7; y++ ){
-        if(this.canPut(x,y)==1)canPutBoard.push([x,y])
+        if(this.canPut(x,y))canPutBoard.push([x,y])
       }
     }
     return canPutBoard

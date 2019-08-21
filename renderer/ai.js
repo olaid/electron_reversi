@@ -1,37 +1,42 @@
+
+const valuationBoard = [
+  [9,3,2,5,5,2,3,9],
+  [3,1,4,6,6,4,1,3],
+  [2,4,4,8,8,4,4,2],
+  [5,6,8,5,5,8,6,5],
+  [5,6,8,5,5,8,6,5],
+  [2,4,4,8,8,4,4,2],
+  [3,1,4,6,6,4,1,3],
+  [9,3,2,5,5,2,3,9]
+]
+const depthMax = 3
+
 export default class ai {
-  let valuationBoard = [
-    [9,3,2,5,5,2,3,9],
-    [3,1,4,6,6,4,1,3],
-    [2,4,4,8,8,4,4,2],
-    [5,6,8,5,5,8,6,5],
-    [5,6,8,5,5,8,6,5],
-    [2,4,4,8,8,4,4,2],
-    [3,1,4,6,6,4,1,3],
-    [9,3,2,5,5,2,3,9]
-  ]
-  const depthMax = 3
 
-  randomSelect(){
-    canPutBoard=canPutChecker()
-    canPutBoard[Math.floor(Math.random()*canPutBoard.length-1)]
+  static randomSelect(){
+    let canPutBoard=this.canPutChecker()
+    return canPutBoard[Math.floor(Math.random() * (canPutBoard.length-1) ) ]
   }
 
-  getPutPosition(board,player){
+  static getPutPosition(board,player){
     this.board = board
-    this.cpu = player
+    this.player = player
     this.enemy = -player
-    return deepThinkAllAB(0, 0)
+    return this.randomSelect()
   }
 
-  deepThink(x,y) {
+  static deepThink(board,player,depth,player_score,enemy_score) {
+    this.canPutChecker()
+    if(depth >= depthMax) return 
     for( let x = 0; x <= 7; x++ ){
       for( let y = 0; y <= 7; y++ ){
-        deepThink(map, turn, depth, b, a)
+        //playerは読みが深くなる毎に変わる
+        deepThink(board,-player,depth,enemy_score,player_score)
       }
     }
   }
-  canPutChecker(){
-    let canPutBoard
+  static canPutChecker(){
+    let canPutBoard = []
     for( let x = 0; x <= 7; x++ ){
       for( let y = 0; y <= 7; y++ ){
         if(this.canPut(x,y)==1)canPutBoard.push([x,y])
@@ -39,7 +44,7 @@ export default class ai {
     }
     return canPutBoard
   }
-  canPut(x,y) {
+  static canPut(x,y) {
     if( this.board[x][y] != 0 ) return false
     for( let di_x = -1 ; di_x <= 1 ; di_x++ ){
       for( let di_y = -1 ; di_y <= 1 ; di_y++ ){
@@ -55,7 +60,7 @@ export default class ai {
     }
     return false
   }
-  canPutSub(x,di_x,y,di_y) {
+  static canPutSub(x,di_x,y,di_y) {
     //盤外の場合はfalseを返しこの方向のチェックを終わる
     if ( x+di_x < 0 || y+di_y < 0 || 7 < x+di_x || 7 < y+di_y ) return false
     //石がない場合はfalseを返しこの方向のチェックを終わる
