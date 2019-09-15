@@ -85,7 +85,7 @@ describe('Game', function () {
       const def_player = game.player
       game.put(5,7)
       game.turnEnd()
-      console.log(game.board.map(x=>x.map(y=>y==-1?2:y).join('') ) )
+      //console.log(game.board.map(x=>x.map(y=>y==-1?2:y).join('') ) )
       //PASSされて同じプレイヤーに戻ること
       expect(def_player).toBe(game.player)
     })

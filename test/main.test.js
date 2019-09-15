@@ -1,7 +1,7 @@
 const Application = require('spectron').Application
 const assert = require('assert')
 const electronPath = require('electron') // Require Electron from the binaries included in node_modules.
-
+/*
 describe.skip('Window', function () {
   //タイムアウト時間を30秒に設定
   jest.setTimeout(30000)
@@ -28,3 +28,4 @@ describe.skip('Window', function () {
     app.client.getWindowCount().then((count) => assert.equal(count, 1))
   })
 })
+*/
